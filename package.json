@@ -1,0 +1,23 @@
+{
+  "name": "@playnation/game-sdk",
+  "version": "1.0.0",
+  "description": "SDK for the games on Playnation",
+  "repository": "https://github.com/Koniverse/PlaynationGameSDK.git",
+  "author": "AnhMTV <maithachvietanh@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  }
+}

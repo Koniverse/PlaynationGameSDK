@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playnation App</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+        background-color: #aaa;
+        display: flex;
+        justify-content: center;
+      }
+      iframe {
+        height: 100vh;
+        aspect-ratio: 9/16;
+      }
+      
+      .title {
+        font-size: 24px;
+        color: #fff;
+        margin-bottom: 20px;
+        display: block;
+      }
+      
+      #main-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        display: block;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      #main-menu.hidden {
+        display: none;
+      }
+      
+      #main-menu button {
+        background-color: #666;
+        color: #fff;
+        border: none;
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-menu">
+      <div class="title">
+        Click to play a game
+      </div>
+      <div>
+        <button class="game-button" data-url="game.html" type="button">Casual Game</button>
+        <button class="game-button" data-url="game-farming.html" type="button">Farming Game</button>
+      </div>
+    </div>
+    <iframe id="game-viewport" frameborder="0"></iframe>
+    <script type="module" src="/src/app.ts"></script>
+  </body>
+</html>

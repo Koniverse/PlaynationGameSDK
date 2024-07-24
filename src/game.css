@@ -1,0 +1,59 @@
+body {
+  font-family: 'Press Start 2P';
+  background-color: #212529;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px 24px 12px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.gameplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  flex-direction: column;
+  width: 100%;
+  padding: 24px 12px 48px;
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+.tournament {
+  width: 100%;
+  margin-top: 24px;
+}
