@@ -6,7 +6,10 @@ export default defineConfig({
     target: 'es2015',
     lib: {
       name: 'sdk',
-      entry: ['src/websdk.ts'],
+      entry: {
+        utils: 'src/utils/index.ts',
+        sdk: 'src/websdk.ts',
+      },
     },
     outDir: 'dist',
   },

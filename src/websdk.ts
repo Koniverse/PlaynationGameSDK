@@ -85,7 +85,6 @@ export class IframeSDK implements GameSDK {
       }
 
       this.requests[requestId] = { resolve, reject };
-      console.log('SDK.dispatch', data);
       const msg = { source: 'game-sdk', requestId, action, data };
       
       window.parent.postMessage(msg, '*');

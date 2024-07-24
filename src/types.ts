@@ -200,3 +200,5 @@ export enum ErrorCode {
 export type IframeWindow = typeof globalThis & Window & {
   PlaynationGameSDK: GameSDK;
 }
+
+export type HexString = `0x${string}`;

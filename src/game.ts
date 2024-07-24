@@ -1,5 +1,6 @@
-import {GameState, InGameItem, Player} from "./types";
+import {InGameItem, Player} from "./types";
 import {IframeSDK} from "./websdk";
+import {deepCopy, signPayload} from "./utils";
 
 if (!window.PlaynationGameSDK) {
   Object.assign(window, { PlaynationGameSDK: IframeSDK.instance });
@@ -7,9 +8,6 @@ if (!window.PlaynationGameSDK) {
 
 const gameSDK = window.PlaynationGameSDK;
 
-function deepCopy<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
-}
 
 const app = () => ({
   player: {} as unknown as Player,
@@ -35,11 +33,7 @@ const app = () => ({
       data.a += 1;
       data.b += 3;
       this.data = data;
-      this.updateState({
-        timestamp: new Date().toISOString(),
-        signature: '0x0000',
-        data: data
-      }).catch(console.error);
+      this.updateState(data).catch(console.error);
     }, 1000)
   },
   async play() {
@@ -82,10 +76,16 @@ const app = () => ({
 
     this.gameplay = {};
   },
-  updateState(state: GameState<any>) {
-    return gameSDK.updateState({
+  async updateState(data: any) {
+    const signature = await signPayload(data, 'secret-key');
+    
+    return await gameSDK.updateState({
       gamePlayId: 'gameplay-1',
-      state,
+      state: {
+        signature: signature.toString(),
+        timestamp: new Date().toISOString(),
+        data,
+      },
     });
   },
   getSDKVersion() {
