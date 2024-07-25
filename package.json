@@ -1,6 +1,6 @@
 {
   "name": "@playnation/game-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SDK for the games on Playnation",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "@types/lodash": "^4.17.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.8",
-    "vite-plugin-dts": "^4.0.0-beta.1"
+    "vite-plugin-dts": "^3.9.1"
   },
   "dependencies": {
     "@aws-crypto/sha256-browser": "^5.2.0",
