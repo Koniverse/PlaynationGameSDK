@@ -2,7 +2,10 @@
   "name": "@playnation/game-sdk",
   "version": "1.0.0",
   "description": "SDK for the games on Playnation",
-  "repository": "https://github.com/Koniverse/PlaynationGameSDK.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Koniverse/PlaynationGameSDK.git"
+  },
   "author": "AnhMTV <maithachvietanh@gmail.com>",
   "license": "MIT",
   "type": "module",
@@ -14,11 +17,29 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "typescript": "^5.4.5",
-    "vite": "^5.2.8"
+    "vite": "^5.2.8",
+    "vite-plugin-dts": "^4.0.0-beta.1"
   },
   "dependencies": {
     "@aws-crypto/sha256-browser": "^5.2.0",
+    "flat-embed": "^2.3.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
+  },
+  "main": "dist/websdk.cjs",
+  "module": "dist/websdk.js",
+  "exports": {
+    ".": {
+      "import": "./dist/websdk.js",
+      "require": "./dist/websdk.cjs"
+    },
+    "./websdk": {
+      "import": "./dist/websdk.js",
+      "require": "./dist/websdk.cjs"
+    },
+    "./utils": {
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    }
   }
 }

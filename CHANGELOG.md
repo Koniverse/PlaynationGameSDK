@@ -1,9 +1,6 @@
 # SDK Changelogs
 
-## v0.2
+## v1.0.0
 
-- Add `exit()` method
+- First version with basic interaction with the API
 
-## v0.1
-
-First draft.
