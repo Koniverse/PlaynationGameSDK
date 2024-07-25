@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@aws-crypto/sha256-browser": "^5.2.0",
-    "flat-embed": "^2.3.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },

@@ -632,11 +632,6 @@ fast-uri@^3.0.1:
   resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.1.tgz#cddd2eecfc83a71c1be2cc2ef2061331be8a7134"
   integrity sha512-MWipKbbYiYI0UC7cl8m/i/IWTqfC8YXsqjzybjddLsFjStroQzsHXkc73JutMvBiXmOvapk+axIl79ig5t55Bw==
 
-flat-embed@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/flat-embed/-/flat-embed-2.3.0.tgz#fadb218f9f2bd3e41cdba73412b92b2fafb7b82b"
-  integrity sha512-K1QuKwbWV9eCq+pLIDScw1zSerWM7jWESDAZAFqi9upUjzyO6RMSyuxhpsedBN1enCLkmurlqK3rEbc+vyYfsA==
-
 fs-extra@~7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-7.0.1.tgz#4f189c44aa123b895f722804f55ea23eadc348e9"
