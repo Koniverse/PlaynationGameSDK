@@ -193,9 +193,11 @@ export enum ErrorCode {
   INVALID_REQUEST = 10,
   INVALID_SCORE = 120, // score was not accepted (cheat detected)
   USER_REJECT = 130, // User reject transaction (buy tickets or items)
-  NOT_ENOUGH_ENERGY = 140, // Not enough ticket to play game
+  NOT_ENOUGH_ENERGY = 150, // Not enough ticket to play game
+  
   TOUR_NOT_AVAILABLE = 100, // tournament has ended or disabled
   NOT_ENOUGH_NPS = 110, // no enought NPS to buy tickets or items
+  NOT_ENOUGH_TICKET = 140, // Not enough ticket to play game
 }
 
 export type IframeWindow = typeof globalThis & Window & {
