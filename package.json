@@ -1,6 +1,6 @@
 {
   "name": "@playnation/game-sdk",
-  "version": "1.0.1",
+  "version": "1.0.3-beta.6",
   "description": "SDK for the games on Playnation",
   "repository": {
     "type": "git",
@@ -25,20 +25,7 @@
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
-  "main": "dist/websdk.cjs",
-  "module": "dist/websdk.js",
-  "exports": {
-    ".": {
-      "import": "./dist/websdk.js",
-      "require": "./dist/websdk.cjs"
-    },
-    "./websdk": {
-      "import": "./dist/websdk.js",
-      "require": "./dist/websdk.cjs"
-    },
-    "./utils": {
-      "import": "./dist/utils.js",
-      "require": "./dist/utils.cjs"
-    }
-  }
+  "peerDependencies": {},
+  "main": "./dist/index.js",
+  "module": "./dist/index.js"
 }

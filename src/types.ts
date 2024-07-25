@@ -143,6 +143,7 @@ export type UseInGameItemResponse = {
 export interface PlayResponse {
   /** One time token, use to submit score */
   token: string;
+  remainingTickets: number; // Backward compatibility
   energy: number;
 }
 

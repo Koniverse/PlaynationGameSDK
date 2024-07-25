@@ -85,6 +85,7 @@ const app: GameSDK & any = {
     app.playerInfo.energy -= 20;
     const res: PlayResponse = {
       token: 'abcxyz',
+      remainingTickets: Math.floor(app.playerInfo.energy / 20) - 1,
       energy: app.playerInfo.energy,
     };
 

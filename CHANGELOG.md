@@ -1,5 +1,9 @@
 # SDK Changelogs
 
+## v1.0.2
+
+- Update error handling
+
 ## v1.0.1
 
 - Update dependencies
