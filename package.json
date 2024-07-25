@@ -1,6 +1,6 @@
 {
   "name": "@playnation/game-sdk",
-  "version": "1.0.3-beta.6",
+  "version": "1.0.3",
   "description": "SDK for the games on Playnation",
   "repository": {
     "type": "git",
