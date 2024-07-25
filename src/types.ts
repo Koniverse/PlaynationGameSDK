@@ -188,13 +188,13 @@ export type HapticFeedbackType =
   | 'notiError';
 
 export enum ErrorCode {
-  SystemError = -1, // something went wrong
-  InvalidRequest = 10,
-  TourNotAvailable = 100, // tournament has ended or disabled
-  NotEnoughNPS = 110, // no enought NPS to buy tickets or items
-  InvalidScore = 120, // score was not accepted (cheat detected)
-  UserReject = 130, // User reject transaction (buy tickets or items)
-  NotEnoughTicket = 140, // Not enough ticket to play game
+  SYSTEM_ERROR = -1, // something went wrong
+  INVALID_REQUEST = 10,
+  INVALID_SCORE = 120, // score was not accepted (cheat detected)
+  USER_REJECT = 130, // User reject transaction (buy tickets or items)
+  NOT_ENOUGH_ENERGY = 140, // Not enough ticket to play game
+  TOUR_NOT_AVAILABLE = 100, // tournament has ended or disabled
+  NOT_ENOUGH_NPS = 110, // no enought NPS to buy tickets or items
 }
 
 export type IframeWindow = typeof globalThis & Window & {

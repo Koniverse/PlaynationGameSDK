@@ -9,7 +9,7 @@ import {
   Tournament, TrackScorePayload, UpdateStatePayload,
   UseInGameItemResponse
 } from "./types";
-import {IframeSDKError} from "./error";
+import {PlaynationSDKError} from "./utils";
 
 // Implement example for sdk methods
 const app: GameSDK & any = {
@@ -183,7 +183,7 @@ const app: GameSDK & any = {
       if (!handler || typeof handler !== 'function') {
         throw newError(
           `missing handle func ${handleMethod} for action ${action}`,
-          errorCodes.SystemError,
+          ErrorCode.SYSTEM_ERROR,
         );
       }
 
@@ -205,17 +205,8 @@ const app: GameSDK & any = {
 };
 
 function newError(msg: string, code?: ErrorCode) {
-  return new IframeSDKError(msg, code);
+  return new PlaynationSDKError(msg, code);
 }
 
 app.start();
 
-const errorCodes = {
-  SystemError: -1, // something went wrong
-  InvalidRequest: 10,
-  TourNotAvailable: 100, // tournament has ended or disabled
-  NotEnoughNPS: 110, // no enought NPS to buy tickets or items
-  InvalidScore: 120, // score was not accepted (cheat detected)
-  UserReject: 130, // User reject transaction (buy tickets or items)
-  NotEnoughTicket: 140, // Not enough ticket to play game
-};
