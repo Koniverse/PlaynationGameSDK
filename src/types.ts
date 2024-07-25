@@ -73,7 +73,7 @@ export interface Player {
   /** User Current NPS */
   balanceNPS: number;
   /** Ratio convert game point to NPS*/
-  npsRatio?: number,
+  pointConversionRate: number,
   
   /** State of some special like farming */
   state?: GameState<any>;

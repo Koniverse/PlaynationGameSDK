@@ -22,10 +22,10 @@ const app: GameSDK & any = {
       avatar: 'https://thispersondoesnotexist.com/',
       level: 10,
       inventory: [],
-      
       balanceNPS: 100,
       energy: 300,
       gameEnergy: 20,
+      pointConversionRate: 0.5,
       state: {
         data: {a: 0, b: 0},
         signature: '0x0000',
@@ -130,7 +130,7 @@ const app: GameSDK & any = {
   onSignResult({gamePlayId, gameToken, score}: SignPayload) {
     console.log('sign result', gamePlayId, gameToken, score);
     
-    const addNPS = Math.floor(score / 3);
+    const addNPS = Math.floor(score * app.playerInfo.pointConversionRate);
     
     app.playerInfo.balance += score;
     app.playerInfo.balanceNPS += addNPS;
