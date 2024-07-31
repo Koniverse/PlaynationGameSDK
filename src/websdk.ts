@@ -9,6 +9,7 @@ import {
   SDKInitParams, SignPayload,
   Tournament, TrackScorePayload, UpdateStatePayload, UseInGameItemResponse, UseItemPayload
 } from "./types";
+import { signPayload } from "./utils";
 
 export class IframeSDK implements GameSDK {
   private requestId = 0;
@@ -69,6 +70,9 @@ export class IframeSDK implements GameSDK {
   async useInGameItem(payload: UseItemPayload) {
     return await this.dispatch<UseInGameItemResponse>('USE_INGAME_ITEM', payload);
   }
+  async signPayload (payload: SignPayload, key: string) {
+    return await signPayload(payload, key);
+  }
 
   // Create request and listen for the response
   private requests: Record<number, { resolve: (data: any) => any; reject: (reason: string) => any }> = {};
@@ -118,9 +122,4 @@ export class IframeSDK implements GameSDK {
     }
     return IframeSDK._instance;
   }
-}
-
-// Initialize SDK
-if (!window.PlaynationGameSDK) {
-  window.PlaynationGameSDK = IframeSDK.instance;
 }
