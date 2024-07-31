@@ -6,7 +6,7 @@ import {
   GetLeaderboardResponse, HapticFeedbackType, IframeWindow, InGameItem,
   Player,
   PlayResponse,
-  SDKInitParams, SignPayload,
+  SDKInitParams,
   Tournament, TrackScorePayload, UpdateStatePayload, UseInGameItemResponse, UseItemPayload
 } from "./types";
 import { signPayload } from "./utils";
@@ -31,11 +31,18 @@ export class IframeSDK implements GameSDK {
   async play() {
     return await this.dispatch<PlayResponse>('PLAY');
   }
-  async trackScore(payload:TrackScorePayload) {
-    return await this.dispatch<void>('TRACK_SCORE', payload);
+  async trackScore(gamePlayId: string, score: number) {
+    return await this.dispatch<void>('TRACK_SCORE', {
+      gamePlayId,
+      score
+    });
   }
-  async signResult(payload: SignPayload) {
-    return await this.dispatch<string>('SIGN_RESULT', payload);
+  async signResult(gamePlayId: string, gameToken: string, score: number) {
+    return await this.dispatch<string>('SIGN_RESULT', {
+      gamePlayId,
+      gameToken,
+      score
+    });
   }
   async updateState(payload: UpdateStatePayload): Promise<boolean> {
     return await this.dispatch<boolean>('UPDATE_STATE', payload);
@@ -46,14 +53,14 @@ export class IframeSDK implements GameSDK {
   async showShop() {
     return await this.dispatch<void>('SHOW_SHOP');
   }
-  async getLeaderboard(req: GetLeaderboardRequest) {
-    return await this.dispatch<GetLeaderboardResponse>('GET_LEADERBOARD', req);
+  async getLeaderboard(limit: number, after: string, before: string) {
+    return await this.dispatch<GetLeaderboardResponse>('GET_LEADERBOARD', { limit, after, before });
   }
   async getInGameItems() {
     return await this.dispatch<{ items: InGameItem[] }>('GET_INGAME_ITEMS');
   }
-  async buyInGameItem(payload: BuyItemPayload) {
-    return await this.dispatch<BuyInGameItemResponse>('BUY_INGAME_ITEM', payload);
+  async buyInGameItem(itemId:string, gameplayId?:string) {
+    return await this.dispatch<BuyInGameItemResponse>('BUY_INGAME_ITEM', { itemId, gameplayId });
   }
   async exit(confirm = true) {
     return await this.dispatch<void>('EXIT', confirm);
@@ -67,8 +74,8 @@ export class IframeSDK implements GameSDK {
   async triggerHapticFeedback(type: HapticFeedbackType) {
     await this.dispatch('TRIGGER_HAPTIC_FEEDBACK', type);
   }
-  async useInGameItem(payload: UseItemPayload) {
-    return await this.dispatch<UseInGameItemResponse>('USE_INGAME_ITEM', payload);
+  async useInGameItem(itemId:string, gameplayId?:string) {
+    return await this.dispatch<UseInGameItemResponse>('USE_INGAME_ITEM', { itemId, gameplayId });
   }
   async signPayload (payload: any, key: string) {
     return await signPayload(payload, key);

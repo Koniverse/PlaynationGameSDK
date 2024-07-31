@@ -51,17 +51,10 @@ const app = () => ({
   newScore(score: number) {
     gameSDK.triggerHapticFeedback('impactLight');
     this.gameplay.score = score;
-    gameSDK.trackScore({
-      gamePlayId: this.gameplay.id,
-      score,
-    });
+    gameSDK.trackScore(this.gameplay.id, score);
   },
   async gameover() {
-    const signature = await gameSDK.signResult({
-      gamePlayId: 'gameplay-1',
-      gameToken: this.gameplay.token,
-      score: this.gameplay.score,
-    });
+    const signature = await gameSDK.signResult('gameplay-1', this.gameplay.token, this.gameplay.score);
     
     const player = await gameSDK.getPlayer();
     Object.assign(this.player, player);

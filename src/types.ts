@@ -1,4 +1,4 @@
-export interface GameSDK {
+export interface GameSDKHandler {
   /** SDK must be initialized first */
   init(params: SDKInitParams): Promise<{
     // ISO8601 date string
@@ -31,6 +31,55 @@ export interface GameSDK {
   getInGameItems(): Promise<{ items: InGameItem[] }>;
   buyInGameItem(payload: BuyItemPayload): Promise<BuyInGameItemResponse>;
   useInGameItem(payload: UseItemPayload): Promise<UseInGameItemResponse>;
+  /**
+   * quit game, close webview
+   * @param confirm default = true
+   */
+  exit(confirm: boolean): Promise<void>;
+  /**
+   * quit game and back to list games
+   * @param confirm default = true
+   */
+  exitToListGames(confirm: boolean): Promise<void>;
+  
+  // Devices actions
+  triggerHapticFeedback(type: HapticFeedbackType): Promise<void>;
+}
+
+export interface GameSDK {
+  /** SDK must be initialized first */
+  init(params: SDKInitParams): Promise<{
+    // ISO8601 date string
+    currentTimestamp: string;
+  }>;
+  
+  /** Get basic actions*/
+  getPlayer(): Promise<Player>;
+  getVersion(): string;
+  
+  /** Return current tournament, undefined = practice mode */
+  getTournament(): Promise<Tournament | undefined>;
+  buyTickets(): Promise<{ balance: number; tickets: number }>;
+  
+  /** Call play will cost player 1 ticket and return a token to submit score */
+  play(): Promise<PlayResponse>;
+  /** Call every time player's score change */
+  trackScore(gamePlayId: string, score: number): Promise<void>;
+  /** Sign game play result and return signature to submit score */
+  signResult(gamePlayId: string, gameToken: string, score: number): Promise<string>;
+
+  /** Call every time game state is changed */
+  updateState(payload: UpdateStatePayload): Promise<boolean>;
+  
+  /** Leader board action*/
+  showLeaderboard(): Promise<void>;
+  getLeaderboard(limit: number, after: string, before: string): Promise<GetLeaderboardResponse>;
+  
+  /** Shop actions  */
+  showShop(): Promise<void>;
+  getInGameItems(): Promise<{ items: InGameItem[] }>;
+  buyInGameItem(itemId: string, gameplayId?: string): Promise<BuyInGameItemResponse>;
+  useInGameItem(itemId: string, gameplayId?: string): Promise<UseInGameItemResponse>;
   /**
    * quit game, close webview
    * @param confirm default = true

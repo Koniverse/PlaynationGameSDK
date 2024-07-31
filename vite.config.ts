@@ -15,22 +15,6 @@ export default defineConfig({
         index: 'src/index.ts'
       },
     },
-    outDir: 'dist',
-    rollupOptions: {
-      preserveEntrySignatures: "strict",
-      output: [
-        {
-          preserveModules: true,
-          preserveModulesRoot: "src",
-          entryFileNames: ({name: fileName}) => {
-            return `${fileName}.js`;
-          },
-        },
-      ],
-      external: [
-        ...Object.keys(pkg.dependencies),
-        ...Object.keys(pkg.peerDependencies)
-      ],
-    }
+    outDir: 'dist'
   },
 });
