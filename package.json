@@ -1,6 +1,6 @@
 {
   "name": "@playnation/game-sdk",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "SDK for the games on Playnation",
   "repository": {
     "type": "git",
@@ -11,7 +11,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "yarn build:normal && yarn build:rollup",
+    "build:normal": "tsc && vite build",
+    "build:rollup": "tsc && vite build -c vite-rollup.config.ts",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -26,6 +28,6 @@
     "zod": "^3.22.4"
   },
   "peerDependencies": {},
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js"
 }

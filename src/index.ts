@@ -1,3 +1,3 @@
-import { IframeSDK } from "./websdk";
-
-window.PlaynationGameSDK = IframeSDK.instance;
+export * from './types';
+export * from './utils';
+export * from './websdk';

@@ -17,6 +17,7 @@ CHANGELOG.md
 *.png
 tsconfig.json
 vite.config.ts
+vite-rollup.config.ts
 
 # Editor directories and files
 .vscode/*

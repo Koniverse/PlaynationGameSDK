@@ -1,20 +1,16 @@
 import {defineConfig} from 'vite';
-import dts from 'vite-plugin-dts'
-import pkg from "./package.json";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    dts()
-  ],
   build: {
     target: 'es2015',
     lib: {
-      name: 'PlaynationSDK',
+      formats: ['es', 'cjs', "iife"],
+      name: 'PlaynationGameSDK',
       entry: {
-        index: 'src/index.ts'
+        sdk: 'src/sdk.ts'
       },
     },
-    outDir: 'dist'
+    outDir: 'browser'
   },
 });
