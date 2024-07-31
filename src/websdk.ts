@@ -70,7 +70,7 @@ export class IframeSDK implements GameSDK {
   async useInGameItem(payload: UseItemPayload) {
     return await this.dispatch<UseInGameItemResponse>('USE_INGAME_ITEM', payload);
   }
-  async signPayload (payload: SignPayload, key: string) {
+  async signPayload (payload: any, key: string) {
     return await signPayload(payload, key);
   }
 
