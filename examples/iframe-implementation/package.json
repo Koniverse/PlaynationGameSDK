@@ -1,0 +1,28 @@
+{
+  "name": "@playnation/iframe-implimentation-example",
+  "version": "1.0.9",
+  "description": "Example of iframe implementation for Playnation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Koniverse/PlaynationGameSDK.git"
+  },
+  "author": "AnhMTV <maithachvietanh@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "@playnation/game-sdk": "^1.0.9",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "peerDependencies": {},
+  "main": "./dist/index.js",
+  "module": "./dist/index.js"
+}

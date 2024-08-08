@@ -3,13 +3,12 @@ import z from 'zod';
 import {
   BuyInGameItemResponse, ErrorCode, GameSDK, GetLeaderboardRequest, GetLeaderboardResponse, HapticFeedbackType,
   InGameItem,
-  Player,
+  Player, PlaynationSDKError,
   PlayResponse,
   SDKInitParams, SignPayload,
   Tournament, TrackScorePayload, UpdateStatePayload,
   UseInGameItemResponse
-} from "./types";
-import {PlaynationSDKError} from "./utils";
+} from "@playnation/game-sdk";
 
 // Implement example for sdk methods
 const app: GameSDK & any = {
@@ -95,6 +94,7 @@ const app: GameSDK & any = {
     console.log('track score', gamePlayId, score);
   },
   onUpdateState({gamePlayId, state}: UpdateStatePayload) {
+    console.log('update state', gamePlayId, state);
     this.playerInfo.state = state;
   },
   onBuyTickets() {
@@ -125,6 +125,7 @@ const app: GameSDK & any = {
     return res;
   },
   onTriggerHapticFeedback(type: HapticFeedbackType) {
+    console.log('trigger haptic', type);
     // TODO: implement later
   },
   onSignResult({gamePlayId, gameToken, score}: SignPayload) {
@@ -148,6 +149,7 @@ const app: GameSDK & any = {
     alert('Open the shop');
   },
   onGetLeaderboard(req: GetLeaderboardRequest) {
+    console.log('get leaderboard', req);
     const res: GetLeaderboardResponse = {
       players: [],
     };

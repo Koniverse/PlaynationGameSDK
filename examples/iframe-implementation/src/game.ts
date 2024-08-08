@@ -1,20 +1,13 @@
-import {InGameItem, Player} from "./types";
-import {IframeSDK} from "./websdk";
-import {deepCopy, signPayload} from "./utils";
+import {InGameItem, IframeSDK, Player, signPayload} from "@playnation/game-sdk";
 
-if (!window.PlaynationGameSDK) {
-  Object.assign(window, { PlaynationGameSDK: IframeSDK.instance });
-}
-
-const gameSDK = window.PlaynationGameSDK;
-
+const gameSDK = IframeSDK.instance;
 
 const app = () => ({
   player: {} as unknown as Player,
   gameplay: {} as any,
   tournament: {},
   items: [] as InGameItem[],
-  data:  {} as any,
+  data: {} as any,
   async init() {
     gameSDK.init({
       clientId: 'fake-client',
@@ -24,23 +17,12 @@ const app = () => ({
     this.tournament = (await gameSDK.getTournament()) || {};
     const itemData = await gameSDK.getInGameItems().catch();
     this.items = itemData.items || [];
-    
-    const defaultState = {'a': 0, 'b': 0};
-    const data = deepCopy(this.player.state?.data || defaultState);
-    console.debug('init with data', data);
-    
-    setInterval(() => {
-      data.a += 1;
-      data.b += 3;
-      this.data = data;
-      this.updateState(data).catch(console.error);
-    }, 1000)
   },
   async play() {
     // Game client should call game API to init new gameplay and get gameplayId;
     const gameplayId = 'gameplay1';
 
-    const { token, energy } = await gameSDK.play();
+    const {token, energy} = await gameSDK.play();
     this.player.energy = energy;
     this.gameplay = {
       id: gameplayId,
@@ -55,7 +37,7 @@ const app = () => ({
   },
   async gameover() {
     const signature = await gameSDK.signResult('gameplay-1', this.gameplay.token, this.gameplay.score);
-    
+
     const player = await gameSDK.getPlayer();
     Object.assign(this.player, player);
 
@@ -71,7 +53,7 @@ const app = () => ({
   },
   async updateState(data: any) {
     const signature = await signPayload(data, 'secret-key');
-    
+
     return await gameSDK.updateState({
       gamePlayId: 'gameplay-1',
       state: {
@@ -98,4 +80,4 @@ const app = () => ({
   },
 });
 
-Object.assign(window, { app });
+Object.assign(window, {app});
