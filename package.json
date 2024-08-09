@@ -10,22 +10,17 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "yarn build:normal && yarn build:rollup",
     "build:normal": "tsc && vite build",
-    "build:rollup": "tsc && vite build -c vite-rollup.config.ts",
-    "preview": "vite preview"
+    "build:rollup": "tsc && vite build -c vite-rollup.config.ts"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.8",
     "vite-plugin-dts": "^3.9.1"
   },
   "dependencies": {
-    "@aws-crypto/sha256-browser": "^5.2.0",
-    "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "@aws-crypto/sha256-browser": "^5.2.0"
   },
   "peerDependencies": {},
   "main": "./dist/index.js",

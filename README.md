@@ -6,15 +6,15 @@ The first SDK version is following the concept from https://github.com/wallacy-i
 
 ## Integration
 
-Coming soon
+Please see in the iframe example in the `example` folder.
 
 ### Error handling
 
 Coming soon
 
-## Development
+## Build
 
 ```sh
 $ yarn
-$ yarn dev
+$ yarn build
 ```

@@ -7,8 +7,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: 'index.html',
-        game: 'game.html',
-        'game-farming': 'game-farming.html'
+        iframe: 'iframe.html',
+        iframe_farming: 'iframe_farming.html'
       },
       output: {
         entryFileNames: '[name].js',
