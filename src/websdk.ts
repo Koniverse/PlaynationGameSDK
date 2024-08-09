@@ -1,15 +1,15 @@
 import {
-  BuyInGameItemResponse, BuyItemPayload,
+  BuyInGameItemResponse,
   GameSDK,
-  GameState,
-  GetLeaderboardRequest,
   GetLeaderboardResponse, HapticFeedbackType, IframeWindow, InGameItem,
   Player,
   PlayResponse,
   SDKInitParams,
-  Tournament, TrackScorePayload, UpdateStatePayload, UseInGameItemResponse, UseItemPayload
+  Tournament, UpdateStatePayload, UseInGameItemResponse
 } from "./types";
 import { signPayload } from "./utils";
+
+const SDK_VERSION = '1.1.0'; // Update this version when you update the SDK
 
 export class IframeSDK implements GameSDK {
   private requestId = 0;
@@ -69,7 +69,7 @@ export class IframeSDK implements GameSDK {
     return await this.dispatch<void>('EXIT_TO_LIST_GAMES', confirm);
   }
   getVersion() {
-    return 'v1';
+    return SDK_VERSION;
   }
   async triggerHapticFeedback(type: HapticFeedbackType) {
     await this.dispatch('TRIGGER_HAPTIC_FEEDBACK', type);

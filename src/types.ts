@@ -111,8 +111,13 @@ export interface Player {
   /** Image URL */
   avatar?: string;
   /** Total user game point */
-  balance: number;
-  /** Current NPS of user */
+  balance: number; // Deprecated
+  
+  /** Alternative of the balance */
+  totalScore: number;
+  highScore?: number;
+  
+  /** User Inventory list */
   inventory?: Inventory;
   
   /** Player Energy */
@@ -137,21 +142,16 @@ export type Inventory = Array<{
 
 /** Deprecated **/
 export interface Tournament {
-  id: string;
+  id: number;
   name: string;
   /** ISO 8601 timestamp */
   startTime: string;
   /** ISO 8601 timestamp */
   endTime: string;
-  /** total tickets of current player */
+  
+  /** Total tickets of current player
+   * Deprecated - Replace with player energy */
   tickets: number;
-  totalPlayers: number;
-  entryFee: number;
-  entryTickets: number;
-  prizePool: {
-    /** total NPS of prize pool at current timestamp */
-    total: number;
-  };
 }
 
 export interface InGameItem {
