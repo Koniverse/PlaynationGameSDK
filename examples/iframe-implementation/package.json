@@ -11,6 +11,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:source": "vite --mode=source",
     "build": "tsc && vite build"
   },
   "devDependencies": {
@@ -19,7 +20,7 @@
     "vite": "^5.2.8"
   },
   "dependencies": {
-    "@playnation/game-sdk": "^1.0.9",
+    "@playnation/game-sdk": "^1.1.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },

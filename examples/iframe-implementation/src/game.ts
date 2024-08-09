@@ -5,16 +5,14 @@ const gameSDK = IframeSDK.instance;
 const app = () => ({
   player: {} as unknown as Player,
   gameplay: {} as any,
-  tournament: {},
   items: [] as InGameItem[],
   data: {} as any,
   async init() {
-    gameSDK.init({
+    await gameSDK.init({
       clientId: 'fake-client',
     });
 
     this.player = await gameSDK.getPlayer();
-    this.tournament = (await gameSDK.getTournament()) || {};
     const itemData = await gameSDK.getInGameItems().catch();
     this.items = itemData.items || [];
   },

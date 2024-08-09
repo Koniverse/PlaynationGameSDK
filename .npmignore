@@ -10,6 +10,7 @@ lerna-debug.log*
 # Need remove in publish mode
 node_modules
 src
+examples
 dist-ssr
 *.local
 CHANGELOG.md
