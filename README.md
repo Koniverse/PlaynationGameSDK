@@ -22,12 +22,12 @@ Init flow: Get basic information
 Play casual game flow
 - `play()` start the game
 - `trackScore()` on playing
-- `signResult()` when game is over
+- `signResult()` sign and submit the result
 - `getPlayer()` to retrieve player data
 
 Play farming game
 - `play()` start the game
-- `signPayload()` sign to get the game state with key
+- `signPayload()` sign to get the game state with secret key from the game
 - `updateState()` update signed payload every time the game state changes
 
 ---
@@ -142,6 +142,7 @@ Gets the player information.
   - **energy**: The player's energy.
   - **gameEnergy**: Energy cost each play time.
   - **pointConversionRate**: The point conversion rate.
+  - **state**: The latest state in case farming game.
 
 #### `getTournament(): Promise<Tournament | undefined>`
 Gets the tournament information.
@@ -150,6 +151,7 @@ Gets the tournament information.
 
 #### `play(): Promise<PlayResponse>`
 Starts the game play.
+Note: This method will return a token that should be used to track the score and sign the result.
 
 - **Returns**: A promise that resolves with the play response.
 
@@ -161,7 +163,7 @@ Tracks the score for a given game play.
 - **Returns**: A promise that resolves when the score is tracked.
 
 #### `signResult(gamePlayId: string, gameToken: string, score: number): Promise<string>`
-Signs the result of a game play.
+Signs & submits the result of a game play. The game result will be signed and submitted to the Playnation server.
 
 - **gamePlayId**: The game play ID.
 - **gameToken**: The game token.
@@ -169,7 +171,7 @@ Signs the result of a game play.
 - **Returns**: A promise that resolves with the signed result.
 
 #### `updateState(payload: UpdateStatePayload): Promise<boolean>`
-Updates the state of the game.
+Updates the state of the game. Playnation only updates the game state but does not validate its details, so the data needs to be signed with signPayload and validated between the game and the server to ensure security. 
 
 - **payload**: The state payload to update.
 - **Returns**: A promise that resolves with a boolean indicating success.
@@ -184,7 +186,6 @@ Signs a payload with a given key.
 ## Error handling
 
 ### Error Codes
-
 
 Enum representing various error codes that can be returned by the SDK.
 
