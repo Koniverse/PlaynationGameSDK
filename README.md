@@ -4,7 +4,7 @@ This is an SDK for integrating games into Playnation.
 
 The first SDK version follows the concept from [game-sdk-example](https://github.com/wallacy-io/game-sdk-example).
 
-Online Demo: [https://playnation-game-sdk.netlify.app/](https://playnation-game-sdk.netlify.app/)
+Online Demo: [https://playnation-sdk-demo.netlify.app](https://playnation-sdk-demo.netlify.app)
 
 ## Concepts
 - Connect game on the iframe with `postMessage` and window listening.
