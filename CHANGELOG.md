@@ -1,5 +1,14 @@
 # SDK Changelogs
 
+## v1.1.0
+
+- Split SDK and Example
+- Update internal structure
+
+## v1.0.6-v1.0.9
+
+- Update bundling with rollup
+
 ## v1.0.5
 
 - Update pointConversionRate
