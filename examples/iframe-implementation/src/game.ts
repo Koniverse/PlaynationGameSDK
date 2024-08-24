@@ -17,13 +17,10 @@ const app = () => ({
     this.items = itemData.items || [];
   },
   async play() {
-    // Game client should call game API to init new gameplay and get gameplayId;
-    const gameplayId = 'gameplay1';
-
-    const {token, energy} = await gameSDK.play();
+    const {gamePlayId, token, energy} = await gameSDK.play();
     this.player.energy = energy;
     this.gameplay = {
-      id: gameplayId,
+      id: gamePlayId,
       score: 0,
       token,
     };
