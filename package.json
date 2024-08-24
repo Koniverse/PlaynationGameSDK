@@ -1,6 +1,6 @@
 {
   "name": "@playnation/game-sdk",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "SDK for the games on Playnation",
   "repository": {
     "type": "git",
@@ -15,9 +15,9 @@
     "build:rollup": "tsc && vite build -c vite-rollup.config.ts"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
-    "vite": "^5.2.8",
-    "vite-plugin-dts": "^3.9.1"
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.0.3"
   },
   "dependencies": {
     "@aws-crypto/sha256-browser": "^5.2.0"
