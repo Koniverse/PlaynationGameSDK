@@ -1,5 +1,10 @@
 # SDK Changelogs
 
+## v1.1.1
+
+- Update play method with `gamePlayId`
+- Bump deps
+
 ## v1.1.0
 
 - Split SDK and Example
