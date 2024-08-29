@@ -170,10 +170,10 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.21.5.tgz#acad351d582d157bb145535db2a6ff53dd514b5c"
   integrity sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==
 
-"@playnation/game-sdk@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@playnation/game-sdk/-/game-sdk-1.1.0.tgz#2ff08e36724e0ba5c6408c01d2f145ea0d17e487"
-  integrity sha512-nFfpyzxJ/uaEv1ZGd97ZvLMbRTun0uf8V9o94LoIDf8o4WzH11YuyTsCzGbHmmqACNqHFRZ2rfPr+xpvJDXGUw==
+"@playnation/game-sdk@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@playnation/game-sdk/-/game-sdk-1.1.1.tgz#818aab4e122576c4a82dc205ad622434ec447853"
+  integrity sha512-kALsnJ/gcxZUREfISB9O7c1ogKfNhAn18U3KvnGAGkGpCOThx1rjAHELRFLGHsu/owTx36HsPno9QkIxQWiXoA==
   dependencies:
     "@aws-crypto/sha256-browser" "^5.2.0"
 
