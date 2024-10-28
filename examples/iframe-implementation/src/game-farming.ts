@@ -68,7 +68,7 @@ const app = () => ({
 
     return await gameSDK.updateState({
       gamePlayId: 'gameplay-1',
-      state: {
+      stateData: {
         signature: signature.toString(),
         timestamp: new Date().toISOString(),
         data,

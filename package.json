@@ -12,7 +12,8 @@
   "scripts": {
     "build": "yarn build:normal && yarn build:rollup",
     "build:normal": "tsc && vite build",
-    "build:rollup": "tsc && vite build -c vite-rollup.config.ts"
+    "build:rollup": "tsc && vite build -c vite-rollup.config.ts",
+    "dev": "vite build -c vite-rollup.config.ts --watch"
   },
   "devDependencies": {
     "typescript": "^5.5.4",

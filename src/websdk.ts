@@ -1,12 +1,12 @@
 import {
   BuyInGameItemResponse,
   GameSDK,
-  GetLeaderboardResponse, HapticFeedbackType, IframeWindow, InGameItem,
+  GetLeaderboardResponse, HapticFeedbackType, IframeWindow, InGameItem, newGamePlayPayload,
   Player,
   PlayResponse,
-  SDKInitParams,
-  Tournament, UpdateStatePayload, UseInGameItemResponse
-} from "./types";
+  SDKInitParams, SubmitStatePayload, SubmitStateResponse,
+  Tournament, UpdateStatePayload, UseInGameItemResponse,
+} from './types';
 import {signPayload} from "./utils";
 
 const SDK_VERSION = '1.1.0'; // Update this version when you update the SDK
@@ -59,9 +59,10 @@ export class IframeSDK implements GameSDK {
   /**
    * Starts the game play.
    * @returns {Promise<PlayResponse>} - A promise that resolves with the play response.
+   * @param {newGamePlayPayload} payload
    */
-  async play() {
-    return await this.dispatch<PlayResponse>('PLAY');
+  async play(payload?: newGamePlayPayload): Promise<PlayResponse> {
+    return await this.dispatch<PlayResponse>('PLAY', payload);
   }
 
   /**
@@ -100,6 +101,16 @@ export class IframeSDK implements GameSDK {
   async updateState(payload: UpdateStatePayload): Promise<boolean> {
     return await this.dispatch<boolean>('UPDATE_STATE', payload);
   }
+
+  /**
+   * Updates the state of the game.
+   * @returns {Promise<SubmitStateResponse>} - A promise that resolves with a boolean indicating success.
+   * @param {SubmitStatePayload} payload
+   */
+  async submitState (payload: SubmitStatePayload): Promise<SubmitStateResponse> {
+    return await this.dispatch<SubmitStateResponse>('SUBMIT_STATE', payload);
+  }
+  
 
     /**
    * Signs a payload with a given key.
