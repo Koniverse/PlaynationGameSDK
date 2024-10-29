@@ -1,12 +1,19 @@
-import {
+import {ActionPayload,
   BuyInGameItemResponse,
   GameSDK,
-  GetLeaderboardResponse, HapticFeedbackType, IframeWindow, InGameItem,
+  GetLeaderboardResponse,
+  HapticFeedbackType,
+  InGameItem,
+  NewGamePlayPayload,
   Player,
   PlayResponse,
   SDKInitParams,
-  Tournament, UpdateStatePayload, UseInGameItemResponse
-} from "./types";
+  SubmitActionPayload,
+  SubmitActionResponse,
+  Tournament,
+  UpdateStatePayload,
+  UseInGameItemResponse,
+} from './types';
 import {signPayload} from "./utils";
 
 const SDK_VERSION = '1.1.0'; // Update this version when you update the SDK
@@ -59,9 +66,10 @@ export class IframeSDK implements GameSDK {
   /**
    * Starts the game play.
    * @returns {Promise<PlayResponse>} - A promise that resolves with the play response.
+   * @param {NewGamePlayPayload} payload
    */
-  async play() {
-    return await this.dispatch<PlayResponse>('PLAY');
+  async play(payload?: NewGamePlayPayload): Promise<PlayResponse> {
+    return await this.dispatch<PlayResponse>('PLAY', payload);
   }
 
   /**
@@ -101,7 +109,18 @@ export class IframeSDK implements GameSDK {
     return await this.dispatch<boolean>('UPDATE_STATE', payload);
   }
 
-    /**
+  
+  /**
+   * Submits an action payload.
+   * @param {SubmitActionPayload<ActionPayload>} payload - The action payload to submit.
+   * @returns {Promise<SubmitActionResponse>} - A promise that resolves with the submit action response.
+   */
+  async submitAction(payload: SubmitActionPayload<ActionPayload>): Promise<SubmitActionResponse> {
+    return await this.dispatch<SubmitActionResponse>('SUBMIT_ACTION', payload);
+  }
+
+
+  /**
    * Signs a payload with a given key.
    * @param {any} payload - The payload to sign.
    * @param {string} key - The key to sign the payload with.
@@ -110,7 +129,7 @@ export class IframeSDK implements GameSDK {
   async signPayload(payload: any, key: string) {
     return await signPayload(payload, key);
   }
-  
+
   /*=== Bellow methods will be implemented in the near future ===*/
 
   /**
@@ -125,12 +144,12 @@ export class IframeSDK implements GameSDK {
    * Triggers haptic feedback.
    * @param {HapticFeedbackType} type - The type of haptic feedback to trigger.
    * @returns {Promise<void>} - A promise that resolves when the haptic feedback is triggered.
- */
+   */
   async triggerHapticFeedback(type: HapticFeedbackType) {
     await this.dispatch('TRIGGER_HAPTIC_FEEDBACK', type);
   }
-  
-  
+
+
   /*=== Bellow methods will be implemented in the future ===*/
   async buyTickets() {
     return await this.dispatch<{ balance: number; tickets: number }>('BUY_TICKET');
@@ -164,7 +183,6 @@ export class IframeSDK implements GameSDK {
     return await this.dispatch<UseInGameItemResponse>('USE_INGAME_ITEM', {itemId, gameplayId});
   }
 
-  
   /*=== Methods to interact with Playnation parent page ===*/
   private requests: Record<number, { resolve: (data: any) => any; reject: (reason: string) => any }> = {};
 

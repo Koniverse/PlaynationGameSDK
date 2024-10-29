@@ -15,10 +15,13 @@ import {
   SDKInitParams,
   SignPayload,
   Tournament,
-  TrackScorePayload,
-  UpdateStatePayload,
-  UseInGameItemResponse
-} from "@playnation/game-sdk";
+  TrackScorePayload, UpdateStatePayload,
+  UseInGameItemResponse,
+} from '@playnation/game-sdk';
+import { CARD_USER_START, CardStat, GAME_EVENTS, GameInitData, StateData } from './data.ts';
+import { ActionPayload, NewGamePlayPayload, SubmitActionPayload, SubmitActionResponse } from '../../../src';
+import _ from 'lodash';
+
 
 const GamePlaySimulator = {
   get totalScore() {
@@ -56,6 +59,14 @@ const GamePlaySimulator = {
   }
 }
 
+let gamePlay: any = {...GameInitData, stateData: JSON.parse(JSON.stringify(StateData))}
+
+
+interface CardGameActionPayload extends ActionPayload {
+  payload: any;
+}
+
+
 // Implement example for sdk methods
 const app: GameSDK & any = {
   viewport: document.getElementById('game-viewport') as HTMLIFrameElement | null,
@@ -73,10 +84,13 @@ const app: GameSDK & any = {
     gameEnergy: 20,
     pointConversionRate: 0.6,
     state: {
-      data: {a: 0, b: 0},
+      data: {
+        mythicalCards: CARD_USER_START
+      },
       signature: '0x0000',
       timestamp: new Date().toISOString(),
-    }
+    },
+    event: GAME_EVENTS
   } as Player,
   openGame: (url: string) => {
     if (app.viewport) {
@@ -107,7 +121,6 @@ const app: GameSDK & any = {
     this.playerInfo.balance = totalScore;
     this.playerInfo.highScore = GamePlaySimulator.highScore;
     this.playerInfo.balanceNPS = GamePlaySimulator.balanceNPS;
-    this.playerInfo.state = GamePlaySimulator.state;
     
     return this.playerInfo;
   },
@@ -129,10 +142,26 @@ const app: GameSDK & any = {
     return tour;
   },
   
-  onPlay() {
+  onPlay(payload: NewGamePlayPayload) {
+    const { gameInitData} = payload;
     app.playerInfo.energy -= 20;
+    gamePlay = {
+      ...GameInitData,
+      stateData: _.cloneDeep(StateData)
+    }
+    gamePlay.stateData = {
+      ...gamePlay.stateData,
+      userCards: gameInitData.userCardsSelected,
+      currentRound: 0,
+      playDuration: 0,
+      state: 'not_started'
+    }
+    gamePlay.initState = _.cloneDeep(gameInitData);
+    
     const res: PlayResponse = {
-      gamePlayId: '123',
+      gamePlayId: 'game-play-id',
+      initData: gamePlay.initState,
+      stateData: gamePlay.stateData,
       token: 'abcxyz',
       remainingTickets: Math.floor(app.playerInfo.energy / 20) - 1,
       energy: app.playerInfo.energy,
@@ -160,9 +189,74 @@ const app: GameSDK & any = {
     return sig;
   },
   
+  onGetInGameItems() {
+    const items: InGameItem[] = [
+      {
+        id: 'item1',
+        name: 'Booster',
+        price: 10,
+      },
+      {
+        id: 'item2',
+        name: 'Energy',
+        price: 20,
+      },
+    ];
+
+    return { items };
+  },
+  
   onUpdateState({gamePlayId, state}: UpdateStatePayload) {
     console.log('update state', gamePlayId, state);
     GamePlaySimulator.state = state;
+  },
+  
+  onSubmitAction(payload_: SubmitActionPayload<CardGameActionPayload>): SubmitActionResponse {
+    const data = payload_.state.data;
+    const cardPlayer = data?.payload?.cardPlayer;
+    let currentRound = gamePlay.stateData.currentRound;
+
+    if (data.action === 'start') {
+      gamePlay.stateData.state = 'start';
+      gamePlay.stateData.rounds[0].state = 'ready';
+    } else if (data.action === 'play') {
+
+      gamePlay.stateData.state = 'playing';
+      currentRound++;
+
+      let round = {...gamePlay.stateData.rounds[currentRound - 1]}
+      round.cardPlayer = cardPlayer;
+      round.state = 'active';
+      round = {...round,
+        isWin: true,
+        score: 100
+      }
+      
+      round.statResult = [CardStat.ACC];
+      round.cardPlayer = cardPlayer;
+      gamePlay.stateData.currentRound = currentRound;
+      gamePlay.stateData.rounds[currentRound - 1] = round;
+      gamePlay.stateData.userCards = gamePlay.stateData.userCards.filter((card: { defId: string }) => card.defId !== round.cardPlayer?.defId);
+        // Set next round to be ready
+      if (currentRound < gamePlay.stateData.rounds.length) {
+        gamePlay.stateData.rounds[currentRound].state = 'ready';
+      }
+    } else if (data.action === 'finish') {
+      // Handle finish action
+
+      gamePlay.stateData.state = 'finished';
+      // Todo: Issue-23 Update playDuration round by round
+      gamePlay.stateData.playDuration = Math.floor((gamePlay.endTime.getTime() - gamePlay.startTime.getTime()) / 1000);
+      gamePlay.point = 100000;
+      
+    } else {
+      throw new Error('Invalid action');
+    }
+    
+    return {
+      success: true,
+      stateData: gamePlay.stateData
+    }
   },
   
   // Will be implemented soon

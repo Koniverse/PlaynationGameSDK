@@ -62,7 +62,7 @@ export interface GameSDK {
   buyTickets(): Promise<{ balance: number; tickets: number }>;
   
   /** Call play will cost player 1 ticket and return a token to submit score */
-  play(): Promise<PlayResponse>;
+  play(payload?: NewGamePlayPayload): Promise<PlayResponse>;
   /** Call every time player's score change */
   trackScore(gamePlayId: string, score: number): Promise<void>;
   /** Sign game play result and return signature to submit score */
@@ -70,6 +70,7 @@ export interface GameSDK {
 
   /** Call every time game state is changed */
   updateState(payload: UpdateStatePayload): Promise<boolean>;
+  submitAction(payload: SubmitActionPayload<ActionPayload>): Promise<SubmitActionResponse>;
   
   /** Leader board action*/
   showLeaderboard(): Promise<void>;
@@ -131,6 +132,9 @@ export interface Player {
   
   /** State of some special like farming */
   state?: GameState<any>;
+  
+  /** Event info **/
+  event?: any;
 }
 
 export type Inventory = Array<{
@@ -191,10 +195,18 @@ export type UseInGameItemResponse = {
 
 export interface PlayResponse {
   gamePlayId: string;
+  initData?: any;
+  stateData?: any;
   /** One time token, use to submit score */
   token: string;
   remainingTickets: number; // Backward compatibility
   energy: number;
+}
+
+export interface SubmitActionResponse {
+  success: boolean;
+  stateData: any;
+  point?: number;
 }
 
 export interface Error {
@@ -213,9 +225,22 @@ export interface TrackScorePayload {
 }
 
 
+export interface NewGamePlayPayload {
+  gameInitData?: any;
+}
+
 export interface UpdateStatePayload {
   gamePlayId: string;
   state: GameState<any>
+}
+
+export interface ActionPayload {
+  action: string;
+}
+
+export interface SubmitActionPayload<T extends ActionPayload>{
+  gamePlayId: string;
+  state: GameState<T>
 }
 
 export interface BuyItemPayload {
