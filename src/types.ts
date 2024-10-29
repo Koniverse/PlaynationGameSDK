@@ -195,8 +195,8 @@ export type UseInGameItemResponse = {
 
 export interface PlayResponse {
   gamePlayId: string;
-  initData?: GameState<any>;
-  stateData?: GameState<any>;
+  initData?: any;
+  stateData?: any;
   /** One time token, use to submit score */
   token: string;
   remainingTickets: number; // Backward compatibility
@@ -205,7 +205,7 @@ export interface PlayResponse {
 
 export interface SubmitActionResponse {
   success: boolean;
-  stateData: GameState<any>;
+  stateData: any;
   point?: number;
 }
 

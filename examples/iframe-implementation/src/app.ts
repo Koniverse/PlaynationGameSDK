@@ -19,7 +19,7 @@ import {
   UseInGameItemResponse,
 } from '@playnation/game-sdk';
 import { CARD_USER_START, CardStat, GAME_EVENTS, GameInitData, StateData } from './data.ts';
-import {ActionPayload, NewGamePlayPayload, SubmitActionPayload} from '../../../src';
+import { ActionPayload, NewGamePlayPayload, SubmitActionPayload, SubmitActionResponse } from '../../../src';
 import _ from 'lodash';
 
 
@@ -156,9 +156,11 @@ const app: GameSDK & any = {
       playDuration: 0,
       state: 'not_started'
     }
+    gamePlay.initState = _.cloneDeep(gameInitData);
+    
     const res: PlayResponse = {
       gamePlayId: 'game-play-id',
-      initData: gamePlay.initData,
+      initData: gamePlay.initState,
       stateData: gamePlay.stateData,
       token: 'abcxyz',
       remainingTickets: Math.floor(app.playerInfo.energy / 20) - 1,
@@ -209,7 +211,7 @@ const app: GameSDK & any = {
     GamePlaySimulator.state = state;
   },
   
-  onSubmitAction(payload_: SubmitActionPayload<CardGameActionPayload>) {
+  onSubmitAction(payload_: SubmitActionPayload<CardGameActionPayload>): SubmitActionResponse {
     const data = payload_.state.data;
     const cardPlayer = data?.roundData?.cardPlayer;
     let currentRound = gamePlay.stateData.currentRound;
@@ -242,9 +244,9 @@ const app: GameSDK & any = {
     } else if (data.action === 'finish') {
       // Handle finish action
 
-      gamePlay.state = 'finished';
+      gamePlay.stateData.state = 'finished';
       // Todo: Issue-23 Update playDuration round by round
-      gamePlay.playDuration = Math.floor((gamePlay.endTime.getTime() - gamePlay.startTime.getTime()) / 1000);
+      gamePlay.stateData.playDuration = Math.floor((gamePlay.endTime.getTime() - gamePlay.startTime.getTime()) / 1000);
       gamePlay.point = 100000;
       
     } else {
@@ -253,7 +255,7 @@ const app: GameSDK & any = {
     
     return {
       success: true,
-      gamePlay
+      stateData: gamePlay.stateData
     }
   },
   
