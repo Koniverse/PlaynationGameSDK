@@ -63,7 +63,7 @@ let gamePlay: any = {...GameInitData, stateData: JSON.parse(JSON.stringify(State
 
 
 interface CardGameActionPayload extends ActionPayload {
-  roundData: any;
+  payload: any;
 }
 
 
@@ -213,7 +213,7 @@ const app: GameSDK & any = {
   
   onSubmitAction(payload_: SubmitActionPayload<CardGameActionPayload>): SubmitActionResponse {
     const data = payload_.state.data;
-    const cardPlayer = data?.roundData?.cardPlayer;
+    const cardPlayer = data?.payload?.cardPlayer;
     let currentRound = gamePlay.stateData.currentRound;
 
     if (data.action === 'start') {
