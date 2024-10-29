@@ -62,7 +62,7 @@ export interface GameSDK {
   buyTickets(): Promise<{ balance: number; tickets: number }>;
   
   /** Call play will cost player 1 ticket and return a token to submit score */
-  play(payload?: newGamePlayPayload): Promise<PlayResponse>;
+  play(payload?: NewGamePlayPayload): Promise<PlayResponse>;
   /** Call every time player's score change */
   trackScore(gamePlayId: string, score: number): Promise<void>;
   /** Sign game play result and return signature to submit score */
@@ -70,7 +70,7 @@ export interface GameSDK {
 
   /** Call every time game state is changed */
   updateState(payload: UpdateStatePayload): Promise<boolean>;
-  submitState(payload: SubmitStatePayload): Promise<SubmitStateResponse>;
+  submitAction(payload: SubmitActionPayload<ActionPayload>): Promise<SubmitActionResponse>;
   
   /** Leader board action*/
   showLeaderboard(): Promise<void>;
@@ -194,16 +194,19 @@ export type UseInGameItemResponse = {
 };
 
 export interface PlayResponse {
-  gamePlay: any;
+  gamePlayId: string;
+  initData?: GameState<any>;
+  stateData?: GameState<any>;
   /** One time token, use to submit score */
   token: string;
   remainingTickets: number; // Backward compatibility
   energy: number;
 }
 
-export interface SubmitStateResponse {
+export interface SubmitActionResponse {
   success: boolean;
-  gamePlay: any;
+  stateData: GameState<any>;
+  point?: number;
 }
 
 export interface Error {
@@ -222,18 +225,23 @@ export interface TrackScorePayload {
 }
 
 
-export interface newGamePlayPayload {
-  gameId: number;
-  gameEventId?: number;
+export interface NewGamePlayPayload {
   gameInitData?: any;
 }
 
 export interface UpdateStatePayload {
   gamePlayId: string;
-  stateData: GameState<any>
+  state: GameState<any>
 }
 
-export interface SubmitStatePayload extends UpdateStatePayload{}
+export interface ActionPayload {
+  action: string;
+}
+
+export interface SubmitActionPayload<T extends ActionPayload>{
+  gamePlayId: string;
+  state: GameState<T>
+}
 
 export interface BuyItemPayload {
   itemId: string;

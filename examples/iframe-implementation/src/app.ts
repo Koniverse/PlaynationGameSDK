@@ -13,13 +13,14 @@ import {
   PlaynationSDKError,
   PlayResponse,
   SDKInitParams,
-  SignPayload, SubmitStatePayload,
+  SignPayload,
   Tournament,
-  TrackScorePayload,
+  TrackScorePayload, UpdateStatePayload,
   UseInGameItemResponse,
 } from '@playnation/game-sdk';
 import { CARD_USER_START, CardStat, GAME_EVENTS, GameInitData, StateData } from './data.ts';
-import { newGamePlayPayload } from '../../../src';
+import {ActionPayload, NewGamePlayPayload, SubmitActionPayload} from '../../../src';
+import _ from 'lodash';
 
 
 const GamePlaySimulator = {
@@ -59,6 +60,11 @@ const GamePlaySimulator = {
 }
 
 let gamePlay: any = {...GameInitData, stateData: JSON.parse(JSON.stringify(StateData))}
+
+
+interface CardGameActionPayload extends ActionPayload {
+  roundData: any;
+}
 
 
 // Implement example for sdk methods
@@ -136,13 +142,12 @@ const app: GameSDK & any = {
     return tour;
   },
   
-  onPlay(payload: newGamePlayPayload) {
-    const { gameId, gameInitData, gameEventId} = payload;
+  onPlay(payload: NewGamePlayPayload) {
+    const { gameInitData} = payload;
     app.playerInfo.energy -= 20;
     gamePlay = {
-      ... {...GameInitData, stateData: JSON.parse(JSON.stringify(StateData))},
-      gameId,
-      gameEventId
+      ...GameInitData,
+      stateData: _.cloneDeep(StateData)
     }
     gamePlay.stateData = {
       ...gamePlay.stateData,
@@ -152,7 +157,9 @@ const app: GameSDK & any = {
       state: 'not_started'
     }
     const res: PlayResponse = {
-      gamePlay,
+      gamePlayId: 'game-play-id',
+      initData: gamePlay.initData,
+      stateData: gamePlay.stateData,
       token: 'abcxyz',
       remainingTickets: Math.floor(app.playerInfo.energy / 20) - 1,
       energy: app.playerInfo.energy,
@@ -197,15 +204,17 @@ const app: GameSDK & any = {
     return { items };
   },
   
-  onSubmitState(payload_: SubmitStatePayload) {
-    const { stateData} = payload_ 
-    const {data} = stateData;
+  onUpdateState({gamePlayId, state}: UpdateStatePayload) {
+    console.log('update state', gamePlayId, state);
+    GamePlaySimulator.state = state;
+  },
+  
+  onSubmitAction(payload_: SubmitActionPayload<CardGameActionPayload>) {
+    const data = payload_.state.data;
     const cardPlayer = data?.roundData?.cardPlayer;
     let currentRound = gamePlay.stateData.currentRound;
 
-
     if (data.action === 'start') {
-
       gamePlay.stateData.state = 'start';
       gamePlay.stateData.rounds[0].state = 'ready';
     } else if (data.action === 'play') {
@@ -241,7 +250,6 @@ const app: GameSDK & any = {
     } else {
       throw new Error('Invalid action');
     }
-    
     
     return {
       success: true,
