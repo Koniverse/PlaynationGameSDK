@@ -60,7 +60,7 @@ export const GAME_EVENTS = {
     opponent_teams: [],
     round: 3,
     difficulty: 6,
-    playDuration: 180,
+    playDuration: 10,
     gameplayPerEvent: 2,
   },
   tossUpBonus: [

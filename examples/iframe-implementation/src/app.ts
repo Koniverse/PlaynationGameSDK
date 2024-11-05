@@ -18,7 +18,7 @@ import {
   TrackScorePayload, UpdateStatePayload,
   UseInGameItemResponse,
 } from '@playnation/game-sdk';
-import { CARD_USER_START, CardStat, GAME_EVENTS, GameInitData, StateData } from './data.ts';
+import { CARD_USER_START, GAME_EVENTS, GameInitData, StateData } from './data.ts';
 import { ActionPayload, NewGamePlayPayload, SubmitActionPayload, SubmitActionResponse } from '../../../src';
 import _ from 'lodash';
 
@@ -232,8 +232,10 @@ const app: GameSDK & any = {
         score: 100
       }
       
-      round.statResult = [CardStat.ACC];
+
+      round.statsResult = round.stats[Math.floor(Math.random() * round.stats.length)];
       round.cardPlayer = cardPlayer;
+      round.playDuration =  data?.payload?.playDuration;
       gamePlay.stateData.currentRound = currentRound;
       gamePlay.stateData.rounds[currentRound - 1] = round;
       gamePlay.stateData.userCards = gamePlay.stateData.userCards.filter((card: { defId: string }) => card.defId !== round.cardPlayer?.defId);
@@ -246,8 +248,10 @@ const app: GameSDK & any = {
 
       gamePlay.stateData.state = 'finished';
       // Todo: Issue-23 Update playDuration round by round
-      gamePlay.stateData.playDuration = Math.floor((gamePlay.endTime.getTime() - gamePlay.startTime.getTime()) / 1000);
+      gamePlay.stateData.playDuration = gamePlay.stateData.rounds.reduce((acc: number, round: { playDuration: number }) => acc + round.playDuration, 0);
       gamePlay.point = 100000;
+
+      console.log('Game finished', gamePlay);
       
     } else {
       throw new Error('Invalid action');
